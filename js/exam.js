@@ -1,0 +1,2 @@
+import{buildQueue,makeOptions}from'./quiz.js';export const createExam=(pool,length)=>buildQueue(pool,length).map(sign=>({sign,options:makeOptions(sign,pool),answer:null}));
+export const examResult=questions=>{const correct=questions.filter(q=>q.answer===q.sign.code).length;return{date:new Date().toISOString(),questions:questions.length,correct,incorrect:questions.length-correct,scorePercent:questions.length?correct/questions.length*100:0}};

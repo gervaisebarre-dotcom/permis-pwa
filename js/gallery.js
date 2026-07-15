@@ -1,0 +1,2 @@
+import{escapeHtml,percent}from'./utils.js';import{statusOf,blankProgress}from'./scheduler.js';
+export function card(sign,progress){const p={...blankProgress(),...progress};return`<button class="card sign-card" data-code="${escapeHtml(sign.code)}"><img src="${sign.image}" alt=""><strong>${escapeHtml(sign.code)} — ${escapeHtml(sign.name)}</strong><div class="sign-meta"><span class="badge ${sign.active?'':'incomplete'}">${escapeHtml(sign.validation)}</span><span class="muted">${statusOf(p)} · ${percent(p.correct,p.seen)} %</span></div></button>`}
