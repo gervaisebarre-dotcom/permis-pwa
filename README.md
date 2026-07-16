@@ -8,7 +8,7 @@ Le module charge les 39 infractions approuvées depuis `data/infractions_code.js
 
 La progression utilise `infractions_progress_v1`, les préférences `infractions_settings_v1` et les examens `infractions_exam_history_v1`. Ces clés ne remplacent jamais les clés `panneaux_*` existantes.
 
-Le mode « Révision complète du Code » propose des quiz ou flashcards mixtes avec une proportion 50/50, 75/25 ou 25/75. Chaque réponse alimente uniquement la progression de son module.
+Le mode « Révision complète du Code » propose des quiz, flashcards ou examens mixtes avec une proportion 50/50, 75/25 ou 25/75. Chaque réponse alimente uniquement la progression de son module.
 
 ## Lancement local
 
@@ -30,7 +30,7 @@ Puis ouvrir `http://localhost:8000/quiz/`. Sous Windows, `start_local_server.bat
 
 ## Hors ligne
 
-Le service worker `permis-pwa-v2` précharge l’interface, `data/panneaux_code.json`, `data/infractions_code.json`, les modules JavaScript et les 243 images. L’application complète reste donc disponible hors ligne après la première installation réussie. L’événement `activate` supprime les anciens caches.
+Le service worker `permis-pwa-v5` précharge l’interface, les données, les composants de réponses et de récapitulatif, le mode ciblé sur les erreurs, ainsi que les 243 images. L’application complète reste disponible hors ligne après la première installation réussie. L’événement `activate` supprime les anciens caches.
 
 ## Flashcards
 
@@ -58,3 +58,15 @@ Avant publication, exécuter :
 node scripts/sync_quiz_publish_data.mjs
 node quiz/tests/publish-layout.mjs
 ```
+
+## Améliorations bêta
+
+La séance du jour conserve réellement un objectif de 40 cartes dans `panneaux_daily_session_v1`, avec reprise jusque dans les trois dernières cartes, compteur unique, restant et répétitions. Sa jauge dépend uniquement des cartes uniques terminées. Les anciennes clés de progression ne changent pas.
+
+Deux cours originaux et hors ligne sont accessibles depuis les accueils Panneaux et Infractions. Le cours Infractions détaille les cinq classes, les quatre montants et comprend un tableau responsive. Les quiz et examens utilisent les mêmes états de réponse accessibles et un récapitulatif complet. Le cache `permis-pwa-v5` inclut tous ces composants.
+
+## Uniquement mes erreurs
+
+Ce mode réunit les panneaux et infractions ayant au moins une mauvaise réponse enregistrée. Il peut cibler un module ou les deux et fonctionner en Flashcards, Quiz ou Examen, pour 10, 20, 40 ou toutes les erreurs disponibles. Une demande supérieure au stock réel utilise automatiquement tout le stock.
+
+L’ordre par défaut privilégie la récence, le nombre d’erreurs, le taux de réussite puis l’échéance de révision. Le mélange est optionnel. Une erreur reste prioritaire après une seule bonne réponse et peut quitter la liste principale après deux bonnes réponses consécutives. Le filtre « Inclure les erreurs déjà corrigées récemment » permet de la retrouver.
